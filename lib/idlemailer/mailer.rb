@@ -4,7 +4,7 @@ module IdleMailer
   #  class WidgetMailer
   #    include IdleMailer::Mailer
   #
-  #    def initialize(email, widget)
+  #    def initialize(address, widget)
   #      mail.to = address
   #      mail.subject = "Widget #{widget.sku}"
   #      # See mail gem docs for more options - http://www.rubydoc.info/gems/mail

@@ -6,7 +6,7 @@ module IdleMailer
     # The IdleMailer::Mailer object
     attr_reader :mailer
 
-    # Initialize a new mailer 
+    # Initialize a new message
     def initialize(mail, mailer)
       @mail = mail
       @mailer = mailer
