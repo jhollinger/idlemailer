@@ -37,7 +37,7 @@ module IdleMailer
     end
 
     def layout(type)
-      has_layout?(type) ? render(template_path(IdleMailer.config.layout, type)) { yield } : body(type)
+      has_layout?(type) ? render(template_path(IdleMailer.config.layout, type)) { yield } : yield
     end
 
     def render(path)
