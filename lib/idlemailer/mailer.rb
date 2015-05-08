@@ -22,7 +22,6 @@ module IdleMailer
     def deliver
       mailer = IdleMailer::Message.new(mail, self)
       mailer.deliver!
-      mailer
     end
 
     # Render an ERB template with the mailer's binding
