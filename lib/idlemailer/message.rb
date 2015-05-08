@@ -27,7 +27,8 @@ module IdleMailer
         text_body = layout('text') { body('text') }
         mail.text_part { body text_body }
       end
-      mail.deliver!
+      mail.delivery_method IdleMailer.config.delivery_method, IdleMailer.config.delivery_options
+      mail.deliver
     end
 
     private

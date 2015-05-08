@@ -11,13 +11,7 @@ module IdleMailer
 
   # Takes a block and hands it an IdleMailer::Config object
   def self.config
-    if block_given?
-      yield @config
-      config = @config
-      Mail.defaults do
-        delivery_method config.delivery_method, config.delivery_options
-      end
-    end
+    yield @config if block_given?
     @config
   end
 end
