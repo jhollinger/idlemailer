@@ -28,7 +28,9 @@ module IdleMailer
         mail.text_part { body text_body }
       end
       mail.delivery_method IdleMailer.config.delivery_method, IdleMailer.config.delivery_options
-      mail.deliver
+      message = mail.deliver
+      $stdout.puts message if IdleMailer.config.log
+      message
     end
 
     private
@@ -59,13 +61,6 @@ module IdleMailer
 
     def template_path(name, type)
       IdleMailer.config.templates.join("#{name}.#{type}.erb")
-    end
-
-    def log_to_stdout
-      $stdout.puts [mail.to, mail.cc, mail.bcc].flatten.compact.join('; ')
-      $stdout.puts mail.subject
-      $stdout.puts(layout('html') { body('html') }) if has_template? 'html'
-      $stdout.puts(layout('text') { body('text') }) if has_template? 'text'
     end
   end
 end
