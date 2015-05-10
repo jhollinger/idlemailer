@@ -14,7 +14,6 @@ module IdleMailer
 
     # Deliver mail
     def deliver!
-      log_to_stdout if IdleMailer.config.log
       mail.from IdleMailer.config.default_from if mail.from.nil?
       if has_template? 'html'
         html_body = layout('html') { body('html') }
