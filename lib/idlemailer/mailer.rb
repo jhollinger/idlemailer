@@ -18,15 +18,19 @@ module IdleMailer
   #  mailer.deliver
   #
   module Mailer
+
     # Deliver mail
     def deliver
-      mailer = IdleMailer::Message.new(mail, self)
       mailer.deliver!
     end
 
     # Render an ERB template with the mailer's binding
     def render(template)
       template.result(binding { yield })
+    end
+
+    def mailer
+      @mailer ||= IdleMailer::Message.new(mail, self)
     end
 
     private
