@@ -6,7 +6,7 @@ module IdleMailer
   #   delivery_options Hash of delivery options (see the mail gem for all options)
   #   default_from Default "from" address if it's left blank
   #   log When true, writes delivered messages to $stdout (default false)
-  Config = Struct.new(:templates, :layout, :delivery_method, :delivery_options, :default_from, :log)
+  Config = Struct.new(:templates, :layout, :delivery_method, :delivery_options, :default_from, :log, :logger)
   @config = Config.new
 
   # Takes a block and hands it an IdleMailer::Config object

@@ -14,7 +14,10 @@ module IdleMailer
 
     # Deliver mail
     def deliver!
+      @can_deliver = true
+
       mail.from IdleMailer.config.default_from if mail.from.nil?
+
       if has_template? 'html'
         html_body = layout('html') { body('html') }
         mail.html_part do
@@ -26,13 +29,37 @@ module IdleMailer
         text_body = layout('text') { body('text') }
         mail.text_part { body text_body }
       end
-      mail.delivery_method IdleMailer.config.delivery_method, IdleMailer.config.delivery_options
-      message = mail.deliver
-      $stdout.puts message if IdleMailer.config.log
-      message
+
+      deliver_message!
     end
 
     private
+
+    # Really delivery message
+    def deliver_message!
+      raise "This method must be called from inside `deliver!` method" unless @can_deliver
+
+      mail.delivery_method IdleMailer.config.delivery_method, IdleMailer.config.delivery_options
+      message = mail.deliver
+
+      log_message_deliver(message.to_s)
+
+      message
+    end
+
+    # log to STDOUT and/or custom log
+    def log_message_deliver(message)
+      log_to_stdout(message)
+      log_to_file(message)
+    end
+
+    def log_to_stdout(message)
+      $stdout.puts message if IdleMailer.config.log
+    end
+
+    def log_to_file(message)
+      IdleMailer.config.logger.info message if IdleMailer.config.logger
+    end
 
     def body(type)
       render template_path(template_name, type)
@@ -55,7 +82,9 @@ module IdleMailer
     end
 
     def template_name
-      @name ||= mailer.class.name.sub(/Mailer$/, '').gsub(/([a-z])([A-Z])/, "\\1_\\2").downcase
+      base_class = mailer.class.name.split("::").join(File::SEPARATOR)
+
+      @name ||= base_class.sub(/Mailer$/, '').gsub(/([a-z])([A-Z])/, "\\1_\\2").downcase
     end
 
     def template_path(name, type)

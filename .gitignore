@@ -1,3 +1,5 @@
 *.gem
 .bundle/
 Gemfile.lock
+
+test/support/delivery_log.log
