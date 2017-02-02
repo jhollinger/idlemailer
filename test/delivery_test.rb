@@ -38,4 +38,17 @@ class DeliveryTest < Minitest::Test
     WidgetMailer.new('user@example.com', @widget).deliver
     assert_match /test html layout/i, Mail::TestMailer.deliveries.first.to_s
   end
+
+  def test_namespaced_mailer_template_name
+    user = User.new('Rafael Fidelis', 'myemail@email.com')
+    mailer = MyNamespace::V1::Mailers::UsersMailer.new(user)
+    message = IdleMailer::Message.new(Mail.new, mailer)
+    assert_equal message.send(:template_name), 'my_namespace/v1/mailers/users'
+  end
+
+  def test_namespaced_html_template
+    user = User.new('Rafael Fidelis', 'myemail@email.com')
+    mailer = MyNamespace::V1::Mailers::UsersMailer.new(user).deliver
+    assert_match /Welcome #{user.name} to IdleMailer/i, mailer.to_s
+  end
 end

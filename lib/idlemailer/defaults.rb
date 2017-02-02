@@ -12,5 +12,6 @@ IdleMailer.config do |config|
     enable_starttls_auto: (ENV['MAIL_TLS'] ? true : false)
   }
   config.default_from = nil
-  config.log = false
+  config.logger = nil
+  config.log_body = false
 end

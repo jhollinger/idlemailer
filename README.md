@@ -58,8 +58,12 @@ These are the default options. Salt to taste.
       # Default "from" address for all mailers
       config.default_from = nil
 
-      # Write all deliveries to $stdout
-      config.log = false
+      # Write logs to any custom logger you want
+      # For using Logger you may want to: require 'logger'
+      config.logger = Logger.new('log/mailers.log')
+
+      # Write full message body to log (if enabled). Otherwise, only message headers are logged.
+      config.log_body = false
     end
 
 ## Testing
