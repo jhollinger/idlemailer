@@ -62,8 +62,9 @@ IdleMailer.config do |config|
   config.default_from = nil
 
   # Write logs to any custom logger you want
-  # For using Logger you may want to: require 'logger'
-  config.logger = Logger.new('log/mailers.log')
+  # config.logger = Logger.new($stdout)
+  # config.logger = Logger.new('log/mailers.log')
+  config.logger = nil
 
   # Write full message body to log (if enabled). Otherwise, only message headers are logged.
   config.log_body = false
