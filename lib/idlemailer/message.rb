@@ -8,13 +8,11 @@ module IdleMailer
 
     # Initialize a new message
     def initialize(mail, mailer)
-      @mail = mail
-      @mailer = mailer
+      @mail, @mailer = mail, mailer
     end
 
     # Deliver mail
     def deliver!
-      mail.from IdleMailer.config.default_from if mail.from.nil?
       if has_template? 'html'
         html_body = layout('html') { body('html') }
         mail.html_part do
@@ -26,9 +24,11 @@ module IdleMailer
         text_body = layout('text') { body('text') }
         mail.text_part { body text_body }
       end
-      mail.delivery_method IdleMailer.config.delivery_method, IdleMailer.config.delivery_options
+      config = IdleMailer.config
+      mail.from config.default_from if mail.from.nil?
+      mail.delivery_method config.delivery_method, config.delivery_options
       message = mail.deliver
-      $stdout.puts message if IdleMailer.config.log
+      config.logger.info(config.log_body ? message.to_s : message) if config.logger
       message
     end
 
@@ -55,7 +55,11 @@ module IdleMailer
     end
 
     def template_name
-      @name ||= mailer.class.name.sub(/Mailer$/, '').gsub(/([a-z])([A-Z])/, "\\1_\\2").downcase
+      @name ||= mailer.class.name.
+        gsub(/::/, File::SEPARATOR).
+        sub(/Mailer$/, '').
+        gsub(/([a-z])([A-Z])/, "\\1_\\2").
+        downcase
     end
 
     def template_path(name, type)
