@@ -61,7 +61,7 @@ IdleMailer.config do |config|
   # Default "from" address for all mailers
   config.default_from = nil
 
-  # Write logs to any custom logger you want
+  # Log sent emails (require 'logger')
   # config.logger = Logger.new($stdout)
   # config.logger = Logger.new('log/mailers.log')
   config.logger = nil
