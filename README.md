@@ -1,15 +1,16 @@
 # IdleMailer
 
-A lightweight (~150 line) alternative to ActionMailer for hipsters who use Ruby but not Rails. Powered by [mail](http://www.rubydoc.info/gems/mail). Great for API-only backends that need to send email.
+A lightweight (~150 line) alternative to ActionMailer for Rubyists who are too cool for Rails. Powered by the [mail](http://www.rubydoc.info/gems/mail) gem. Great for API-only backends that need to send email.
 
 ## Installation
 
-    $ [sudo] gem install idlemailer
-    # Or add "idlemailer" to your Gemfile
+Add to your Gemfile.
+
+    gem 'idlemailer'
 
 ## Use
 
-IdleMailer is all about providing mailer classes and templates. But [the mail gem](http://www.rubydoc.info/gems/mail) has a great API, so you have unfettered access to it in your mailers through the "mail" object.
+IdleMailer provides mailer classes and templates on top of the [mail](http://www.rubydoc.info/gems/mail) gem. `mail` has a great API, so you have unfettered access to it in your mailers.
 
 ```ruby
 # Define your mailer class
@@ -17,18 +18,17 @@ class WidgetMailer
   include IdleMailer::Mailer
 
   def initialize(user, widget)
+    @widget = widget
     mail.to = user.email
     mail.subject = "Widget #{widget.sku}"
-    @widget = widget
   end
 end
 
-# Create widget.html.erb and/or widget.text.erb templates.
+# Create widget.html.erb and/or widget.text.erb in your templates directory.
 # They'll have access to instance variables like @widget above.
 
 # Send your mail
-mailer = WidgetMailer.new(current_user, widget)
-mailer.deliver
+WidgetMailer.new(current_user, widget).deliver
 ```
 
 ### Inline templates
@@ -40,9 +40,9 @@ class WidgetMailer
   include IdleMailer::Mailer
 
   def initialize(user, widget)
+    @widget = widget
     mail.to = user.email
     mail.subject = "Widget #{widget.sku}"
-    @widget = widget
   end
 
   text %(
