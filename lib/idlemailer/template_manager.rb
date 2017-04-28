@@ -1,4 +1,5 @@
 module IdleMailer
+  # Loads a mailer's templates and layouts
   module TemplateManager
     def self.extended(klass)
       klass.class_eval do
