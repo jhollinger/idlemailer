@@ -7,7 +7,7 @@ module IdleMailer
   #   default_from Default "from" address if it's left blank
   #   logger a Logger object for logging email
   #   log_body if true, the entire message body will be logged (instead of just the headers) (default false)
-  Config = Struct.new(:templates, :layout, :delivery_method, :delivery_options, :default_from, :logger, :log_body)
+  Config = Struct.new(:templates, :layout, :cache_templates, :delivery_method, :delivery_options, :default_from, :logger, :log_body)
   @config = Config.new
 
   # Takes a block and hands it an IdleMailer::Config object

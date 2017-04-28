@@ -1,6 +1,6 @@
 require 'tmpdir'
 require 'logger'
-require_relative 'test_helper'
+require 'test_helper'
 
 class LoggingTest < Minitest::Test
   def setup

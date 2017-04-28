@@ -1,6 +1,7 @@
 IdleMailer.config do |config|
   config.templates = Pathname.new(Dir.getwd).join('templates')
   config.layout = 'mailer_layout'
+  config.cache_templates = true
   config.delivery_method = :smtp
   config.delivery_options = {
     user_name: ENV['MAIL_USER'],

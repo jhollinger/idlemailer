@@ -1,6 +1,6 @@
 # IdleMailer
 
-A lightweight (~100 line) alternative to ActionMailer for hipsters who use Ruby but not Rails. Powered by [mail](http://www.rubydoc.info/gems/mail). Great for API-only backends that need to send email.
+A lightweight (~150 line) alternative to ActionMailer for hipsters who use Ruby but not Rails. Powered by [mail](http://www.rubydoc.info/gems/mail). Great for API-only backends that need to send email.
 
 ## Installation
 
@@ -31,6 +31,34 @@ mailer = WidgetMailer.new(current_user, widget)
 mailer.deliver
 ```
 
+### Inline templates
+
+Instead of creating template files, you can embed your ERB templates right inside your Ruby class.
+
+```ruby
+class WidgetMailer
+  include IdleMailer::Mailer
+
+  def initialize(user, widget)
+    mail.to = user.email
+    mail.subject = "Widget #{widget.sku}"
+    @widget = widget
+  end
+
+  text %(
+A new widget called <%= @widget %> was just created!
+
+Thanks!
+  )
+
+  html %(
+<p>A new widget called <%= @widget %> was just created!</p>
+
+<p>Thanks!</p>
+  )
+end
+```
+
 ## Configure
 
 These are the default options. Salt to taste.
@@ -39,6 +67,9 @@ These are the default options. Salt to taste.
 IdleMailer.config do |config|
   # Directory containing the mailer templates
   config.templates = Pathname.new(Dir.getwd).join('templates')
+
+  # Pre-cache all templates and layouts (instead of re-loading them on each delivery)
+  config.cache_templates = true
 
   # Name of the layout template. Here, the file(s) would be named
   # mailer_layout.html.erb and/or mailer_layout.text.erb.

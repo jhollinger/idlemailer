@@ -18,6 +18,10 @@ module IdleMailer
   #  mailer.deliver
   #
   module Mailer
+    def self.included(klass)
+      klass.extend TemplateManager
+    end
+
     # Deliver mail
     def deliver
       mailer = IdleMailer::Message.new(mail, self)
