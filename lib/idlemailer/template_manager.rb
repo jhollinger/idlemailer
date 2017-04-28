@@ -11,19 +11,19 @@ module IdleMailer
     end
 
     def text(str)
-      templates['text'] = ERB.new str
+      templates['text'] = ERB.new str.chomp
     end
 
     def html(str)
-      templates['html'] = ERB.new str
+      templates['html'] = ERB.new str.chomp
     end
 
     def template(type)
-      templates[type] || ERB.new(template_path(template_name, type).read)
+      templates[type] || ERB.new(template_path(template_name, type).read.chomp)
     end
 
     def layout(type)
-      layouts[type] || ERB.new(template_path(IdleMailer.config.layout, type).read)
+      layouts[type] || ERB.new(template_path(IdleMailer.config.layout, type).read.chomp)
     end
 
     def has_template?(type)
