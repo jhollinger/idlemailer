@@ -13,7 +13,7 @@ class LoggingTest < Minitest::Test
       config.logger = nil
       config.log_body = false
     end
-    File.unlink @log_file if File.exists? @log_file
+    File.unlink @log_file if File.exist? @log_file
     Mail::TestMailer.deliveries.clear
   end
 
@@ -23,9 +23,9 @@ class LoggingTest < Minitest::Test
       config.log_body = false
     end
     WidgetMailer.new('user@example.com', @widget).deliver
-    assert File.exists?(@log_file)
-    assert_match /New Widget/, File.read(@log_file)
-    refute_match /template for widget/, File.read(@log_file)
+    assert File.exist?(@log_file)
+    assert_match(/New Widget/, File.read(@log_file))
+    refute_match(/template for widget/, File.read(@log_file))
   end
 
   def test_log_body_to_file
@@ -34,8 +34,8 @@ class LoggingTest < Minitest::Test
       config.log_body = true
     end
     WidgetMailer.new('user@example.com', @widget).deliver
-    assert File.exists?(@log_file)
-    assert_match /New Widget/, File.read(@log_file)
-    assert_match /template for widget/, File.read(@log_file)
+    assert File.exist?(@log_file)
+    assert_match(/New Widget/, File.read(@log_file))
+    assert_match(/template for widget/, File.read(@log_file))
   end
 end

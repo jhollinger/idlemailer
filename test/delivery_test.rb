@@ -26,22 +26,22 @@ class DeliveryTest < Minitest::Test
 
   def test_text_template
     WidgetMailer.new('user@example.com', @widget).deliver
-    assert_match /text template for widget #{@widget.sku}/i, Mail::TestMailer.deliveries.first.to_s
+    assert_match(/text template for widget #{@widget.sku}/i, Mail::TestMailer.deliveries.first.to_s)
   end
 
   def test_html_template
     WidgetMailer.new('user@example.com', @widget).deliver
-    assert_match /html template for widget #{@widget.sku}/i, Mail::TestMailer.deliveries.first.to_s
+    assert_match(/html template for widget #{@widget.sku}/i, Mail::TestMailer.deliveries.first.to_s)
   end
 
   def test_html_layout
     WidgetMailer.new('user@example.com', @widget).deliver
-    assert_match /test html layout/i, Mail::TestMailer.deliveries.first.to_s
+    assert_match(/test html layout/i, Mail::TestMailer.deliveries.first.to_s)
   end
 
   def test_namespaced_html_template
     user = User.new('Rafael Fidelis', 'myemail@email.com')
     mailer = MyNamespace::V1::Mailers::UsersMailer.new(user).deliver
-    assert_match /Welcome #{user.name} to IdleMailer/i, mailer.to_s
+    assert_match(/Welcome #{user.name} to IdleMailer/i, mailer.to_s)
   end
 end
