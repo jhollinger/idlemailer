@@ -128,27 +128,29 @@ end
 
 Your tests will have access to these helper methods. (Note you can also call them directly on `IdleMailer::Testing` as well)
 
-    # quick boolean checks
-    sent_mail_to? 'user@example.com'
-    sent_mail_to? 'user@example.com', /subject/
-    sent_mail_to? 'user@example.com', /subject/, /body/
-    sent_mail_with_subject? /Foo/
-    sent_mail_with_body? /Bar/
-    sent_mail_from? 'user@example.com'
+```ruby
+# quick boolean checks
+sent_mail_to? 'user@example.com'
+sent_mail_to? 'user@example.com', /subject/
+sent_mail_to? 'user@example.com', /subject/, /body/
+sent_mail_with_subject? /Foo/
+sent_mail_with_body? /Bar/
+sent_mail_from? 'user@example.com'
 
-    # get arrays of matching sent mail (Mail::Message objects)
-    mail_to 'user@example.com'
-    mail_to 'user@example.com', /subject/
-    mail_to 'user@example.com', /subject/, /body/
-    mail_with_subject /Foo/
-    mail_with_body /Bar/
-    mail_from 'user@example.com'
+# get arrays of matching sent mail (Mail::Message objects)
+mail_to 'user@example.com'
+mail_to 'user@example.com', /subject/
+mail_to 'user@example.com', /subject/, /body/
+mail_with_subject /Foo/
+mail_with_body /Bar/
+mail_from 'user@example.com'
 
-    # get an array of all sent mail
-    sent_mail
+# get an array of all sent mail
+sent_mail
 
-    # clear all sent mail
-    clear_mail!
+# clear all sent mail
+clear_mail!
+```
 
 ## License
 
