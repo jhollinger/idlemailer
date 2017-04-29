@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), 'lib', 'idlemailer', 'version')
+require_relative 'lib/idlemailer/version'
 
 Gem::Specification.new do |spec|
   spec.name = 'idlemailer'
@@ -13,5 +13,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
   spec.files = [Dir.glob('lib/**/*'), 'README.md', 'LICENSE'].flatten
 
+  spec.required_ruby_version = '>= 2.0.0'
   spec.add_dependency 'mail', '~> 2.0'
 end

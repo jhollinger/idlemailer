@@ -40,11 +40,11 @@ class TemplateTest < Minitest::Test
 
   def test_templates_but_not_results_are_cached
     FooMailer.cache_templates!
-    FooMailer.new('user@example.com', 'AAA').deliver
+    FooMailer.new('user@example.com', 'Foo', 'AAA').deliver
     assert_match(/AAA/, Mail::TestMailer.deliveries.first.to_s)
 
     Mail::TestMailer.deliveries.clear
-    FooMailer.new('user@example.com', 'BBB').deliver
+    FooMailer.new('user@example.com', 'Foo', 'BBB').deliver
     refute_match(/AAA/, Mail::TestMailer.deliveries.first.to_s)
     assert_match(/BBB/, Mail::TestMailer.deliveries.first.to_s)
   end

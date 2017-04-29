@@ -1,9 +1,9 @@
 class FooMailer
   include IdleMailer::Mailer
 
-  def initialize(addr, msg)
+  def initialize(addr, subject, msg)
     @msg = msg
     mail.to = addr
-    mail.subject = 'Foo'
+    mail.subject = subject
   end
 end
