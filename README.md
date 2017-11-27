@@ -21,6 +21,8 @@ class WidgetMailer
     @widget = widget
     mail.to = user.email
     mail.subject = "Widget #{widget.sku}"
+    # 'mail' is just a Mail object from the mail gem, so you can use the
+    # full Mail api here, e.g. to, subject, attachments, etc.
   end
 end
 
