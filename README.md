@@ -35,7 +35,7 @@ WidgetMailer.new(current_user, widget).deliver
 
 ### Inline templates
 
-Instead of creating template files, you can embed your ERB templates right inside your Ruby class.
+If you prefer, you can embed your ERB templates right inside your Ruby class, instead of making separate template files. Slick amiright?
 
 ```ruby
 class WidgetMailer
