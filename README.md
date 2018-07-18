@@ -41,6 +41,9 @@ If you prefer, you can embed your ERB templates right inside your Ruby class, in
 class WidgetMailer
   include IdleMailer::Mailer
 
+  # optionally override the default layout
+  self.layout = "widget_layout"
+
   def initialize(user, widget)
     @widget = widget
     mail.to = user.email
@@ -73,7 +76,7 @@ IdleMailer.config do |config|
   # Pre-cache all templates and layouts (instead of re-loading them on each delivery)
   config.cache_templates = true
 
-  # Name of the layout template. Here, the file(s) would be named
+  # Name of the default layout template. Here, the file(s) would be named
   # mailer_layout.html.erb and/or mailer_layout.text.erb.
   config.layout = 'mailer_layout'
 

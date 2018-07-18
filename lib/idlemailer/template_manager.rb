@@ -6,7 +6,7 @@ module IdleMailer
         class << self
           attr_reader :layouts, :templates
         end
-        @layouts, @templates = {}, {}
+        @custom_layout, @layouts, @templates = nil, {}, {}
       end
       klass.cache_templates! if IdleMailer.config.cache_templates
     end
@@ -24,7 +24,13 @@ module IdleMailer
     end
 
     def layout(type)
-      layouts[type] || ERB.new(template_path(IdleMailer.config.layout, type).read.chomp)
+      layouts[type] || ERB.new(template_path(layout_name, type).read.chomp)
+    end
+
+    def layout=(new_name)
+      @custom_layout = new_name
+      layouts.clear
+      cache_templates! if IdleMailer.config.cache_templates
     end
 
     def has_template?(type)
@@ -32,7 +38,7 @@ module IdleMailer
     end
 
     def has_layout?(type)
-      layouts.has_key?(type) || template_path(IdleMailer.config.layout, type).exist?
+      layouts.has_key?(type) || template_path(layout_name, type).exist?
     end
 
     def template_name
@@ -43,15 +49,19 @@ module IdleMailer
         downcase
     end
 
+    def layout_name
+      @custom_layout || IdleMailer.config.layout
+    end
+
     def template_path(name, type)
       IdleMailer.config.templates.join("#{name}.#{type}.erb")
     end
 
     def cache_templates!
-      layouts['text'] = layout 'text' if has_layout? 'text'
-      layouts['html'] = layout 'html' if has_layout? 'html'
-      templates['text'] = template 'text' if has_template? 'text'
-      templates['html'] = template 'html' if has_template? 'html'
+      layouts['text'] ||= layout 'text' if has_layout? 'text'
+      layouts['html'] ||= layout 'html' if has_layout? 'html'
+      templates['text'] ||= template 'text' if has_template? 'text'
+      templates['html'] ||= template 'html' if has_template? 'html'
     end
   end
 end

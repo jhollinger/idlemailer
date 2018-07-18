@@ -4,6 +4,9 @@ module IdleMailer
   #  class WidgetMailer
   #    include IdleMailer::Mailer
   #
+  #    # optionally override the default layout
+  #    self.layout = "widget_layout"
+  #
   #    def initialize(address, widget)
   #      mail.to = address
   #      mail.subject = "Widget #{widget.sku}"

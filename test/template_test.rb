@@ -4,6 +4,7 @@ class TemplateTest < Minitest::Test
   def setup
     FooMailer.templates.clear
     FooMailer.layouts.clear
+    FooMailer.layout = nil
   end
 
   def teardown
@@ -47,6 +48,14 @@ class TemplateTest < Minitest::Test
     FooMailer.new('user@example.com', 'Foo', 'BBB').deliver
     refute_match(/AAA/, Mail::TestMailer.deliveries.first.to_s)
     assert_match(/BBB/, Mail::TestMailer.deliveries.first.to_s)
+  end
+
+  def test_custom_layout_works
+    FooMailer.cache_templates!
+    FooMailer.layout = "custom_layout"
+    FooMailer.new('user@example.com', 'Foo', 'AAA').deliver
+    assert_match(/AAA/, Mail::TestMailer.deliveries.first.to_s)
+    assert_match(/Custom/, Mail::TestMailer.deliveries.first.to_s)
   end
 
   def test_namespaced_mailer_template_name

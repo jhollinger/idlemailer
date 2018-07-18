@@ -1,7 +1,7 @@
 module IdleMailer
   # Struct for holding IdleMailer config
   #   templates A Pathname object pointing to the mail templates directory (defaults to ./templates)
-  #   layout Name of layout file, minus extention (defaults to mailer_layout)
+  #   layout Name of default layout file, minus extention (defaults to mailer_layout)
   #   delivery_method Symbol like :smtp or :test (see the mail gem for all options)
   #   delivery_options Hash of delivery options (see the mail gem for all options)
   #   default_from Default "from" address if it's left blank
