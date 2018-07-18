@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.summary = "A lightweight alternative to ActionMailer"
   spec.description = "Provides non-Rails projects with a lightweight ActionMailer-like wrapper around the mail gem"
   spec.authors = ['Jordan Hollinger']
-  spec.date = '2017-04-29'
+  spec.date = '2017-07-18'
   spec.email = 'jordan@jordanhollinger.com'
   spec.homepage = 'https://github.com/jhollinger/idlemailer'
 
