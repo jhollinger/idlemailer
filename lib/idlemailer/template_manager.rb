@@ -3,6 +3,7 @@ module IdleMailer
   module TemplateManager
     def self.extended(klass)
       klass.class_eval do
+        include Templates::Helpers
         class << self
           attr_reader :layouts, :templates
         end
@@ -12,19 +13,19 @@ module IdleMailer
     end
 
     def text(str)
-      templates['text'] = ERB.new str.chomp
+      templates['text'] = Templates.compile str.chomp
     end
 
     def html(str)
-      templates['html'] = ERB.new str.chomp
+      templates['html'] = Templates.compile str.chomp
     end
 
     def template(type)
-      templates[type] || ERB.new(template_path(template_name, type).read.chomp)
+      templates[type] || Templates.compile(template_path(template_name, type).read.chomp)
     end
 
     def layout(type)
-      layouts[type] || ERB.new(template_path(layout_name, type).read.chomp)
+      layouts[type] || Templates.compile(template_path(layout_name, type).read.chomp)
     end
 
     def layout=(new_name)
