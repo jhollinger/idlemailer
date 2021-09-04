@@ -1,12 +1,14 @@
 # IdleMailer
 
-A lightweight (~150 line) alternative to ActionMailer for Rubyists who are too cool for Rails. Powered by the [mail](http://www.rubydoc.info/gems/mail) gem. Great for API-only backends that need to send email.
+A lightweight (~200 line) alternative to ActionMailer for Rubyists who are too cool for Rails. Powered by the [mail](http://www.rubydoc.info/gems/mail) gem. Great for API-only backends that need to send email.
 
 ## Installation
 
 Add to your Gemfile.
 
-    gem 'idlemailer'
+```ruby
+gem 'idlemailer'
+```
 
 ## Use
 
@@ -27,10 +29,18 @@ class WidgetMailer
 end
 
 # Create widget.html.erb and/or widget.text.erb in your templates directory.
-# They'll have access to instance variables like @widget above.
+# They'll have access to instance variables like @widget above, as well as any methods you define.
 
 # Send your mail
 WidgetMailer.new(current_user, widget).deliver
+```
+
+### HTML escaping
+
+All values will be automatically HTML-escaped. If you need to bypass escapeing, use the `raw` helper:
+
+```ruby
+<%= raw @something_with_safe_html %>
 ```
 
 ### Inline templates
