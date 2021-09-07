@@ -36,7 +36,9 @@ class DeliveryTest < Minitest::Test
 
   def test_html_layout
     WidgetMailer.new('user@example.com', @widget).deliver
-    assert_match(/test html layout/i, Mail::TestMailer.deliveries.first.to_s)
+    msg = Mail::TestMailer.deliveries.first.to_s
+    assert_match(/test html layout/i, msg)
+    assert_match(/<p>HTML template for widget/, msg)
   end
 
   def test_namespaced_html_template
